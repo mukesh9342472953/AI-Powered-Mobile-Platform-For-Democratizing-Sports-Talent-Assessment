@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Library - AI Sports Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .video-preview {
+            width: 100%;
+            height: 180px;
+            background: #000;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            display: none;
+            object-fit: cover;
+        }
+        .video-item {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .video-item-thumbnail {
+            width: 60px;
+            height: 60px;
+            background: #111;
+            border-radius: var(--radius-sm);
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+        .video-item-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        .video-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+        .video-item-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px;">
+                <div class="app-header">
+                    <div class="app-logo">Video Library</div>
+                    <button onclick="window.history.back()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                        <i data-lucide="chevron-right" style="transform: rotate(180deg);"></i>
+                    </button>
+                </div>
+
+                <div style="padding: 16px;">
+                    <!-- Upload Section -->
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="card-title"><i data-lucide="upload-cloud"></i> Upload New Video</div>
+                        
+                        <video id="video-preview-player" class="video-preview" controls></video>
+                        
+                        <form id="upload-form" onsubmit="uploadVideo(event)">
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <input type="file" id="video-file" accept="video/*" class="form-input" onchange="previewVideo(event)" required style="padding: 10px;">
+                            </div>
+                            <div id="upload-msg" style="font-size: 13px; margin-bottom: 12px;"></div>
+                            <button type="submit" class="btn" id="upload-btn" disabled>Upload to Library</button>
+                        </form>
+                    </div>
+
+                    <!-- Library Section -->
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="card-title"><i data-lucide="film"></i> My Videos</div>
+                        <div id="videos-list">
+                            <div class="loader-ring" style="margin: 20px auto; width: 30px; height: 30px; border-width: 3px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Assessment History Section -->
+                    <div class="card">
+                        <div class="card-title"><i data-lucide="history"></i> Assessment History</div>
+                        <div id="history-list">
+                            <div class="loader-ring" style="margin: 20px auto; width: 30px; height: 30px; border-width: 3px;"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/upload.js"></script>
+</body>
+</html>

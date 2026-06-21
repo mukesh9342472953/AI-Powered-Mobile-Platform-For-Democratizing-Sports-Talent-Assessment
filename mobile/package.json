@@ -1,0 +1,14 @@
+{
+  "name": "ai-sports-talent-assessment",
+  "version": "1.0.0",
+  "description": "AI Powered Mobile Platform for Democratizing Sports Talent Assessment",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm start\"",
+    "start": "npm run dev",
+    "install:all": "cd backend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

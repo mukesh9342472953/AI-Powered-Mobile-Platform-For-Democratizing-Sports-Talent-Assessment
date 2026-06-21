@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AI Sports Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-val {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 10px 4px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        th {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+        }
+        .admin-tab {
+            display: none;
+        }
+        .admin-tab.active {
+            display: block;
+        }
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .nav-tab-btn {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 16px;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .nav-tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px;">
+                <!-- Header -->
+                <div class="app-header">
+                    <div class="app-logo">Admin Panel</div>
+                    <button onclick="handleLogout()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                </div>
+
+                <div style="padding: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div>
+                            <h2 id="welcome-name" style="font-size: 20px; font-weight: 700; margin-bottom: 4px;">Loading...</h2>
+                            <span class="role-badge admin">Super Admin</span>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Cards -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 24px;">
+                        <div class="stat-card">
+                            <div class="stat-val" id="stat-users">-</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val" id="stat-athletes" style="color: var(--secondary)">-</div>
+                            <div class="stat-label">Athletes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val" id="stat-coaches" style="color: var(--accent)">-</div>
+                            <div class="stat-label">Coaches</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val" id="stat-recruiters" style="color: #fbbf24">-</div>
+                            <div class="stat-label">Recruiters</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val" id="stat-events" style="color: #a855f7">-</div>
+                            <div class="stat-label">Events</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val" id="stat-assessments" style="color: #ef4444">-</div>
+                            <div class="stat-label">Assessments</div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Tabs -->
+                    <div class="nav-tabs">
+                        <button class="nav-tab-btn active" onclick="switchTab('users')" id="btn-tab-users">Users</button>
+                        <button class="nav-tab-btn" onclick="switchTab('events')" id="btn-tab-events">Events</button>
+                        <button class="nav-tab-btn" onclick="switchTab('assessments')" id="btn-tab-assessments">Assessments</button>
+                    </div>
+
+                    <!-- Users Tab -->
+                    <div id="tab-users" class="admin-tab active card">
+                        <div class="card-title">User Management</div>
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-users">
+                                    <tr><td colspan="3" style="text-align: center;">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Events Tab -->
+                    <div id="tab-events" class="admin-tab card">
+                        <div class="card-title">Event Management</div>
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-events">
+                                    <tr><td colspan="3" style="text-align: center;">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Assessments Tab -->
+                    <div id="tab-assessments" class="admin-tab card">
+                        <div class="card-title">Assessment Management</div>
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Athlete</th>
+                                        <th>Score</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-assessments">
+                                    <tr><td colspan="3" style="text-align: center;">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

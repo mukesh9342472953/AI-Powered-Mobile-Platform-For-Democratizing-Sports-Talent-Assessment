@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AI Sports Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen">
+                <div class="auth-container" style="justify-content: flex-start; padding-top: 40px;">
+                    <div class="auth-header">
+                        <div class="auth-logo">InspectAI</div>
+                        <div class="auth-subtitle">Join the Platform</div>
+                    </div>
+
+                    <form onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="name" class="form-input" placeholder="Enter your name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" id="password" class="form-input" placeholder="Create a password" minlength="6" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" id="confirm_password" class="form-input" placeholder="Confirm your password" minlength="6" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Role</label>
+                            <select id="role" class="form-select" onchange="toggleRoleFields()" required>
+                                <option value="athlete">Athlete</option>
+                                <option value="coach">Coach</option>
+                                <option value="recruiter">Recruiter</option>
+                            </select>
+                        </div>
+
+                        <!-- Athlete Fields -->
+                        <div id="athlete-fields">
+                            <div class="form-group">
+                                <label class="form-label">Primary Sport</label>
+                                <select id="sport" class="form-select">
+                                    <option value="Cricket">Cricket</option>
+                                    <option value="Football">Football</option>
+                                    <option value="Tennis">Tennis</option>
+                                    <option value="Badminton">Badminton</option>
+                                    <option value="Athletics">Athletics</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Age</label>
+                                    <input type="number" id="age" class="form-input" placeholder="Years">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Gender</label>
+                                    <select id="gender" class="form-select">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Height (cm)</label>
+                                    <input type="number" id="height" class="form-input" placeholder="e.g. 175">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Weight (kg)</label>
+                                    <input type="number" id="weight" class="form-input" placeholder="e.g. 70">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">State</label>
+                                    <input type="text" id="state" class="form-input" placeholder="e.g. Maharashtra">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">District</label>
+                                    <input type="text" id="district" class="form-input" placeholder="e.g. Pune">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coach Fields -->
+                        <div id="coach-fields" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Specialization</label>
+                                <input type="text" id="specialization" class="form-input" placeholder="e.g. Batting Coach">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Experience (Years)</label>
+                                <input type="number" id="experience" class="form-input" placeholder="e.g. 5">
+                            </div>
+                        </div>
+                        
+                        <!-- Recruiter Fields -->
+                        <div id="recruiter-fields" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Sport Interest</label>
+                                <input type="text" id="sport" class="form-input" placeholder="e.g. Cricket">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Organization</label>
+                                <input type="text" id="specialization" class="form-input" placeholder="e.g. National Academy">
+                            </div>
+                        </div>
+
+                        <div id="auth-error" class="alert-error" style="color: #f87171; font-size: 13px; text-align: center; margin-bottom: 12px; min-height: 20px;"></div>
+
+                        <button type="submit" class="btn">
+                            <i data-lucide="user-plus"></i>
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="auth-switch">
+                        Already have an account? 
+                        <a href="login.html" class="auth-switch-link">Sign in here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

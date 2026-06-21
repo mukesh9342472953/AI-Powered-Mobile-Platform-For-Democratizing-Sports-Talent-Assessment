@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Portal</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .search-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .filter-select {
+            padding: 8px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .athlete-card {
+            background: var(--bg-tertiary);
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rating-stars {
+            display: flex;
+            gap: 4px;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px;">
+                <div class="app-header">
+                    <div class="app-logo">Coach Portal</div>
+                    <button onclick="handleLogout()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                </div>
+
+                <div style="padding: 16px;" id="coach-content">
+                    
+                    <div class="search-bar">
+                        <input type="text" id="search-input" class="form-input" placeholder="Search athletes by name..." oninput="filterAthletes()">
+                        <select id="filter-sport" class="filter-select" onchange="filterAthletes()">
+                            <option value="">All Sports</option>
+                            <option value="Cricket">Cricket</option>
+                            <option value="Football">Football</option>
+                            <option value="Basketball">Basketball</option>
+                        </select>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Athletes Directory</div>
+                        
+                        <div id="athletes-list" style="margin-top: 16px;">
+                            <div class="loader-ring" style="margin: 20px auto; width: 30px; height: 30px; border-width: 3px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Modal/Section -->
+                    <div id="feedback-modal" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 100; padding: 20px; align-items: center; justify-content: center;">
+                        <div class="card" style="width: 100%; max-width: 340px; position: relative;">
+                            <button onclick="closeFeedback()" style="position: absolute; right: 16px; top: 16px; background: none; border: none; color: var(--text-muted); cursor: pointer;">
+                                <i data-lucide="x"></i>
+                            </button>
+                            <div class="card-title">Review Performance</div>
+                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                                Athlete: <strong id="fb-athlete-name"></strong>
+                            </div>
+
+                            <form id="feedback-form" onsubmit="submitFeedback(event)">
+                                <input type="hidden" id="fb-athlete-id">
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Rating (1-5)</label>
+                                    <div class="rating-stars" id="star-rating">
+                                        <i data-lucide="star" data-val="1" onclick="setRating(1)"></i>
+                                        <i data-lucide="star" data-val="2" onclick="setRating(2)"></i>
+                                        <i data-lucide="star" data-val="3" onclick="setRating(3)"></i>
+                                        <i data-lucide="star" data-val="4" onclick="setRating(4)"></i>
+                                        <i data-lucide="star" data-val="5" onclick="setRating(5)"></i>
+                                    </div>
+                                    <input type="hidden" id="fb-rating" value="5" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Feedback Notes</label>
+                                    <textarea id="fb-comments" class="form-input" style="height: 100px;" placeholder="Provide detailed feedback on their performance..." required></textarea>
+                                </div>
+                                
+                                <div id="fb-msg" style="font-size: 13px; margin-bottom: 12px;"></div>
+                                <button type="submit" class="btn">Submit Review</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/coach.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - AI Sports Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px;">
+                <div class="app-header">
+                    <div class="app-logo">Notifications</div>
+                    <button onclick="window.history.back()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                        <i data-lucide="chevron-right" style="transform: rotate(180deg);"></i>
+                    </button>
+                </div>
+
+                <div style="padding: 16px;" id="notifications-content">
+                    <div class="loader-ring" style="margin: 40px auto; width: 30px; height: 30px; border-width: 3px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/notifications.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Sports Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px;">
+                <!-- Header -->
+                <div class="app-header">
+                    <div class="app-logo">InspectAI</div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <a href="notifications.html" style="color: var(--text-secondary); position: relative;">
+                            <i data-lucide="bell"></i>
+                            <div class="notification-dot" style="display: none;" id="notif-dot"></div>
+                        </a>
+                        <button onclick="handleLogout()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                            <i data-lucide="log-out"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="padding: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div>
+                            <h2 id="welcome-name" style="font-size: 20px; font-weight: 700; margin-bottom: 4px;">Loading...</h2>
+                            <span class="role-badge athlete" id="user-role-badge">Athlete</span>
+                        </div>
+                        <div style="width: 45px; height: 45px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="user" style="color: var(--primary);"></i>
+                        </div>
+                    </div>
+
+                    <div id="dashboard-content">
+                        <!-- Populated by JS -->
+                        <div class="loader-ring" style="margin: 40px auto; width: 40px; height: 40px; border-width: 3px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - AI Sports Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px;">
+                <div class="app-header">
+                    <div class="app-logo">Profile</div>
+                    <button onclick="handleLogout()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                </div>
+
+                <div style="padding: 16px;">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; position: relative; overflow: hidden;">
+                            <img id="profile-img" src="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                            <i id="profile-icon" data-lucide="user" style="color: var(--primary); width: 40px; height: 40px;"></i>
+                            <input type="file" id="photo-upload" accept="image/*" onchange="uploadProfilePicture(event)" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                        </div>
+                        <h2 id="profile-name" style="font-size: 20px; font-weight: 700; margin-bottom: 4px;">Loading...</h2>
+                        <div id="profile-email" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;"></div>
+                        <span class="role-badge" id="profile-role">Athlete</span>
+                    </div>
+
+                    <div id="profile-msg" style="text-align: center; font-size: 13px; margin-bottom: 12px; min-height: 20px;"></div>
+
+                    <form id="profile-form" onsubmit="updateProfile(event)" class="card">
+                        <div class="card-title">Edit Profile Details</div>
+                        
+                        <!-- Dynamic fields will be populated here -->
+                        <div id="dynamic-profile-fields">
+                            <div class="loader-ring" style="margin: 20px auto; width: 30px; height: 30px; border-width: 3px;"></div>
+                        </div>
+
+                        <button type="submit" class="btn" style="margin-top: 20px;">Save Changes</button>
+                    </form>
+
+                    <form id="password-form" onsubmit="changePassword(event)" class="card" style="margin-top: 16px;">
+                        <div class="card-title">Change Password</div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" id="new-password" class="form-input" placeholder="Min 6 characters" minlength="6" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirm-new-password" class="form-input" placeholder="Confirm password" minlength="6" required>
+                        </div>
+                        <div id="password-msg" style="text-align: center; font-size: 13px; margin-bottom: 12px; min-height: 20px;"></div>
+                        <button type="submit" class="btn btn-secondary" style="margin-top: 8px;">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

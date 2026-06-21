@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - AI Sports Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .event-card {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        .event-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .event-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            font-weight: 600;
+        }
+        .event-detail {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .event-detail i {
+            margin-right: 6px;
+        }
+        .event-desc {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-top: 12px;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px; overflow-y: auto;">
+                <div class="app-header">
+                    <div class="app-logo">Events Hub</div>
+                    <button onclick="window.history.back()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                        <i data-lucide="chevron-right" style="transform: rotate(180deg);"></i>
+                    </button>
+                </div>
+
+                <div style="padding: 16px;">
+                    <div id="events-msg" style="text-align: center; font-size: 13px; margin-bottom: 12px; min-height: 20px;"></div>
+
+                    <!-- Create Event Section (Hidden by default, shown for Admin/Organizer) -->
+                    <div id="create-event-section" class="card" style="display: none; margin-bottom: 24px;">
+                        <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleCreateForm()">
+                            <span><i data-lucide="plus-circle"></i> Create New Event</span>
+                            <i id="create-icon" data-lucide="chevron-down"></i>
+                        </div>
+                        <form id="create-event-form" onsubmit="createEvent(event)" style="display: none; margin-top: 12px;">
+                            <div class="form-group">
+                                <label class="form-label">Event Title</label>
+                                <input type="text" id="ev-title" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <textarea id="ev-desc" class="form-input" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Venue / Location</label>
+                                <input type="text" id="ev-venue" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date & Time</label>
+                                <input type="datetime-local" id="ev-date" class="form-input" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <label class="form-label">Organizer</label>
+                                <input type="text" id="ev-organizer" class="form-input" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label class="form-label">Capacity (Max Athletes)</label>
+                                <input type="number" id="ev-capacity" class="form-input" value="100" min="1" required>
+                            </div>
+                            <button type="submit" class="btn" style="width: 100%;">Publish Event</button>
+                        </form>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h2 style="font-size: 18px; font-weight: 700;">Upcoming Events</h2>
+                    </div>
+
+                    <input type="text" id="event-search" class="form-input" placeholder="Search events..." oninput="debounceEventSearch()" style="margin-bottom: 16px;">
+
+                    <div id="events-content">
+                        <div class="loader-ring" style="margin: 40px auto; width: 30px; height: 30px; border-width: 3px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/events.js"></script>
+</body>
+</html>

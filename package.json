@@ -1,0 +1,11 @@
+{
+  "name": "ai-sports-talent-assessment-root",
+  "version": "1.0.0",
+  "description": "Root package runner for AI Sports Talent Assessment",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix mobile/frontend\" \"npm run dev --prefix mobile/backend\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

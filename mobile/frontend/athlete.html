@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlete Profile</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .profile-img-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 16px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--accent-primary);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-img-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 11px;
+            text-align: center;
+            padding: 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="device-wrapper">
+        <div class="mobile-phone-frame">
+            <div class="phone-notch">
+                <div class="phone-camera"></div>
+                <div class="phone-speaker"></div>
+            </div>
+            <div class="phone-screen" style="padding-bottom: 70px;">
+                <div class="app-header">
+                    <div class="app-logo">Athlete Profile</div>
+                    <button onclick="handleLogout()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                </div>
+
+                <div style="padding: 16px; display: flex; flex-direction: column; gap: 16px;">
+                    <div class="card" style="text-align: center;">
+                        <input type="file" id="photo-upload" style="display: none;" accept="image/*" onchange="uploadProfileImage(event)">
+                        <div class="profile-img-container" onclick="document.getElementById('photo-upload').click()">
+                            <img id="profile-img" src="" alt="Profile Image" style="display: none;">
+                            <i id="profile-icon" data-lucide="camera" style="color: var(--text-muted);"></i>
+                            <div class="profile-img-overlay">Upload</div>
+                        </div>
+                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px;" id="display-name">Loading...</div>
+                        <div style="font-size: 14px; color: var(--accent-primary);" id="display-sport"></div>
+                    </div>
+
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <div class="card-title" style="margin: 0;">Personal Details</div>
+                            <button id="edit-btn" onclick="toggleEditMode()" class="btn btn-outline" style="width: auto; padding: 4px 12px; margin: 0; font-size: 12px;">Edit</button>
+                        </div>
+
+                        <form id="profile-form" onsubmit="saveProfile(event)">
+                            <div class="form-group">
+                                <label class="form-label">Sport</label>
+                                <input type="text" id="sport" class="form-input" disabled required>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div class="form-group">
+                                    <label class="form-label">Age</label>
+                                    <input type="number" id="age" class="form-input" disabled required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Gender</label>
+                                    <select id="gender" class="form-input" disabled required>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div class="form-group">
+                                    <label class="form-label">District</label>
+                                    <input type="text" id="district" class="form-input" disabled required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">State</label>
+                                    <input type="text" id="state" class="form-input" disabled required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Key Achievements</label>
+                                <textarea id="achievements" class="form-input" style="height: 80px;" disabled placeholder="List your major accomplishments..."></textarea>
+                            </div>
+
+                            <div id="profile-msg" style="font-size: 13px; margin-bottom: 12px;"></div>
+                            
+                            <button type="submit" id="save-btn" class="btn" style="display: none;">Save Profile</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/athlete.js"></script>
+</body>
+</html>
