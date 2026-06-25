@@ -299,6 +299,71 @@ async function initializeSchema() {
       )
     `);
 
+    // 12c. Sports Master Table
+    await query.run(`
+      CREATE TABLE IF NOT EXISTS sports_master (
+        sport_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sport_name TEXT UNIQUE NOT NULL,
+        sport_category TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // 12d. Video Validation Logs Table
+    await query.run(`
+      CREATE TABLE IF NOT EXISTS video_validation_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        selected_sport TEXT,
+        detected_sport TEXT,
+        status TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      )
+    `);
+
+    // Seed Sports Master
+    const sportsCountObj = await query.get('SELECT COUNT(*) as count FROM sports_master');
+    if (sportsCountObj && sportsCountObj.count === 0) {
+        const demoSports = [
+            ['Cricket', 'Team'],
+            ['Football', 'Team'],
+            ['Tennis', 'Racket'],
+            ['Badminton', 'Racket'],
+            ['Athletics', 'Individual'],
+            ['Basketball', 'Team'],
+            ['Volleyball', 'Team'],
+            ['Hockey', 'Team'],
+            ['Table Tennis', 'Racket'],
+            ['Kabaddi', 'Team'],
+            ['Swimming', 'Water'],
+            ['Boxing', 'Combat'],
+            ['Wrestling', 'Combat'],
+            ['Archery', 'Target'],
+            ['Shooting', 'Target'],
+            ['Chess', 'Mind'],
+            ['Rugby', 'Team'],
+            ['Handball', 'Team'],
+            ['Cycling', 'Individual'],
+            ['Gymnastics', 'Individual'],
+            ['Weightlifting', 'Individual'],
+            ['Taekwondo', 'Combat'],
+            ['Karate', 'Combat'],
+            ['Judo', 'Combat'],
+            ['Fencing', 'Combat'],
+            ['Skating', 'Individual'],
+            ['Surfing', 'Water'],
+            ['Baseball', 'Team'],
+            ['Softball', 'Team'],
+            ['Golf', 'Target']
+        ];
+        
+        for (const sp of demoSports) {
+            await query.run('INSERT OR IGNORE INTO sports_master (sport_name, sport_category) VALUES (?, ?)', sp);
+        }
+        console.log('Sports master seeded.');
+    }
+
     // 13. Recruitment Messages Table
     await query.run(`
       CREATE TABLE IF NOT EXISTS recruitment_messages (

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div class="device-wrapper">
         <div class="mobile-phone-frame">
@@ -21,12 +23,12 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Inline script to determine routing on page load before pulling in other modules to avoid flashing -->
     <script>
         const token = localStorage.getItem('token');
         const userStr = localStorage.getItem('user');
-        
+
         setTimeout(() => {
             if (token && userStr) {
                 const user = JSON.parse(userStr);
@@ -41,4 +43,5 @@
         }, 1000);
     </script>
 </body>
+
 </html>

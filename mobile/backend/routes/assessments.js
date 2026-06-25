@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { query } = require('../config/db');
 const auth = require('../middleware/auth');
+const SportDetectionService = require('../services/sportDetection');
 
 // Helper to generate realistic feedback and scores based on the sport
 function simulateAIScoring(sport) {
@@ -58,6 +59,32 @@ router.post('/analyze/:videoId', auth, async (req, res) => {
     if (existing) {
       return res.status(400).json({ message: 'This video has already been analyzed' });
     }
+
+    // Sport Validation Layer
+    const detectedSportInfo = SportDetectionService.detectSport(video, athlete.sport);
+    const detectedSport = detectedSportInfo ? detectedSportInfo.sport : 'Unknown';
+    const isMatch = SportDetectionService.validateSport(athlete.sport, detectedSportInfo);
+
+    if (!isMatch) {
+      await query.run(
+        'INSERT INTO video_validation_logs (user_id, selected_sport, detected_sport, status) VALUES (?, ?, ?, ?)',
+        [req.user.id, athlete.sport, detectedSport, 'Rejected']
+      );
+
+      return res.status(400).json({
+        success: false,
+        status: 'Rejected',
+        message: `Invalid Video. Uploaded video belongs to ${detectedSport}. Please upload a ${athlete.sport} video.`,
+        selectedSport: athlete.sport,
+        detectedSport: detectedSport
+      });
+    }
+
+    // Log successful validation
+    await query.run(
+      'INSERT INTO video_validation_logs (user_id, selected_sport, detected_sport, status) VALUES (?, ?, ?, ?)',
+      [req.user.id, athlete.sport, detectedSport, 'Approved']
+    );
 
     // Run simulated AI assessment
     const assessmentDetails = simulateAIScoring(athlete.sport);

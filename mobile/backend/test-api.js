@@ -146,6 +146,34 @@ async function runTests() {
     ids.video = vResult.lastID;
     console.log(`✔ Created video ID: ${ids.video} (status: pending)`);
 
+    // 8b. Mismatched sport validation check
+    console.log('\nStep 8b: Testing sport mismatch verification (Cricket Athlete uploading Football video)...');
+    const vmResult = await query.run(
+      'INSERT INTO videos (user_id, filename, original_name, filepath, filesize) VALUES (?, ?, ?, ?, ?)',
+      [ids.athleteUser, 'dummy-football.mp4', 'dummy-football.mp4', '/uploads/dummy-football.mp4', 1024]
+    );
+    const mismatchedVideoId = vmResult.lastID;
+    
+    const mismatchRes = await fetch(`${BASE_URL}/assessments/analyze/${mismatchedVideoId}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${tokens.athlete}` }
+    });
+    const mismatchData = await mismatchRes.json();
+    
+    if (mismatchRes.status === 400 && mismatchData.status === 'Rejected') {
+      console.log('✔ Mismatch correctly rejected with status:', mismatchData.status, '-', mismatchData.message);
+    } else {
+      throw new Error(`Expected sport mismatch rejection, but got status ${mismatchRes.status}: ${JSON.stringify(mismatchData)}`);
+    }
+
+    // Verify validation log is in db
+    const validationLog = await query.get('SELECT * FROM video_validation_logs WHERE user_id = ? AND status = "Rejected" ORDER BY created_at DESC LIMIT 1', [ids.athleteUser]);
+    if (validationLog) {
+      console.log('✔ Validation Log found in db:', validationLog);
+    } else {
+      throw new Error('Expected video validation log in database, but none was found.');
+    }
+
     // 9. Execute AI Talent Assessment
     console.log('\nStep 9: Running AI Assessment motion analysis on video...');
     const analyzeRes = await fetch(`${BASE_URL}/assessments/analyze/${ids.video}`, {

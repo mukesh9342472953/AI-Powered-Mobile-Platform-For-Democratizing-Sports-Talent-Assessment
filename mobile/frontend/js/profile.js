@@ -42,6 +42,11 @@ async function loadProfileDetails() {
         document.getElementById('profile-email').textContent = currentUser.email;
 
         renderFormFields(fieldsContainer);
+        if (currentUser.role === 'athlete') {
+            setupSearchableDropdown('edit-sport');
+        } else if (currentUser.role === 'recruiter') {
+            setupSearchableDropdown('edit-sport-interest', true);
+        }
         updateProfilePhotoDisplay();
         
     } catch (e) {
@@ -66,7 +71,9 @@ function renderFormFields(container) {
         html += `
             <div class="form-group">
                 <label class="form-label">Sport</label>
-                <input type="text" id="edit-sport" class="form-input" value="${currentDetails.sport || ''}">
+                <select id="edit-sport" class="form-select">
+                    <option value="${currentDetails.sport || ''}">${currentDetails.sport || 'Select Sport'}</option>
+                </select>
             </div>
             <div class="form-row">
                 <div class="form-group">
@@ -125,7 +132,9 @@ function renderFormFields(container) {
             </div>
             <div class="form-group">
                 <label class="form-label">Sport Interest</label>
-                <input type="text" id="edit-sport-interest" class="form-input" value="${currentDetails.sport_interest || ''}">
+                <select id="edit-sport-interest" class="form-select">
+                    <option value="${currentDetails.sport_interest || ''}">${currentDetails.sport_interest || 'Select Sport Interest'}</option>
+                </select>
             </div>
         `;
     }

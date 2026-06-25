@@ -2,6 +2,39 @@ const express = require('express');
 const router = express.Router();
 const { query } = require('../config/db');
 const auth = require('../middleware/auth');
+
+const sports = [
+  "Cricket",
+  "Football",
+  "Tennis",
+  "Badminton",
+  "Athletics",
+  "Basketball",
+  "Volleyball",
+  "Hockey",
+  "Table Tennis",
+  "Kabaddi",
+  "Swimming",
+  "Boxing",
+  "Wrestling",
+  "Archery",
+  "Shooting",
+  "Chess",
+  "Rugby",
+  "Handball",
+  "Cycling",
+  "Gymnastics",
+  "Weightlifting",
+  "Taekwondo",
+  "Karate",
+  "Judo",
+  "Fencing",
+  "Skating",
+  "Surfing",
+  "Baseball",
+  "Softball",
+  "Golf"
+];
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
@@ -57,6 +90,13 @@ router.put('/', auth, async (req, res) => {
   try {
     const user = await query.get('SELECT role FROM users WHERE id = ?', [req.user.id]);
     if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (user.role === 'athlete' && sport && !sports.includes(sport)) {
+      return res.status(400).json({ message: 'Invalid sport selected' });
+    }
+    if (user.role === 'recruiter' && sport_interest && sport_interest !== 'All' && !sports.includes(sport_interest)) {
+      return res.status(400).json({ message: 'Invalid sport interest selected' });
+    }
 
     // Ensure email is not taken by someone else
     const existing = await query.get('SELECT id FROM users WHERE email = ? AND id != ?', [email, req.user.id]);

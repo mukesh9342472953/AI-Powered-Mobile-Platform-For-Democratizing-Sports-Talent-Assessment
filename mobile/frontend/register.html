@@ -55,12 +55,8 @@
                         <div id="athlete-fields">
                             <div class="form-group">
                                 <label class="form-label">Primary Sport</label>
-                                <select id="sport" class="form-select">
+                                <select id="athlete-sport" class="form-select">
                                     <option value="Cricket">Cricket</option>
-                                    <option value="Football">Football</option>
-                                    <option value="Tennis">Tennis</option>
-                                    <option value="Badminton">Badminton</option>
-                                    <option value="Athletics">Athletics</option>
                                 </select>
                             </div>
                             <div class="form-row">
@@ -102,11 +98,11 @@
                         <div id="coach-fields" style="display: none;">
                             <div class="form-group">
                                 <label class="form-label">Specialization</label>
-                                <input type="text" id="specialization" class="form-input" placeholder="e.g. Batting Coach">
+                                <input type="text" id="coach-specialization" class="form-input" placeholder="e.g. Batting Coach">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Experience (Years)</label>
-                                <input type="number" id="experience" class="form-input" placeholder="e.g. 5">
+                                <input type="number" id="coach-experience" class="form-input" placeholder="e.g. 5">
                             </div>
                         </div>
                         
@@ -114,11 +110,13 @@
                         <div id="recruiter-fields" style="display: none;">
                             <div class="form-group">
                                 <label class="form-label">Sport Interest</label>
-                                <input type="text" id="sport" class="form-input" placeholder="e.g. Cricket">
+                                <select id="recruiter-sport" class="form-select">
+                                    <option value="Cricket">Cricket</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Organization</label>
-                                <input type="text" id="specialization" class="form-input" placeholder="e.g. National Academy">
+                                <input type="text" id="recruiter-org" class="form-input" placeholder="e.g. National Academy">
                             </div>
                         </div>
 
@@ -143,5 +141,11 @@
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
     <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setupSearchableDropdown('athlete-sport');
+            setupSearchableDropdown('recruiter-sport');
+        });
+    </script>
 </body>
 </html>

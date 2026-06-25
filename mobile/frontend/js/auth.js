@@ -60,15 +60,15 @@ async function handleRegister(event) {
     }
     
     // Additional fields based on role
-    const sport = document.getElementById('sport')?.value;
+    const sport = role === 'athlete' ? document.getElementById('athlete-sport')?.value : (role === 'recruiter' ? document.getElementById('recruiter-sport')?.value : undefined);
     const age = document.getElementById('age')?.value;
     const gender = document.getElementById('gender')?.value;
     const height = document.getElementById('height')?.value;
     const weight = document.getElementById('weight')?.value;
     const district = document.getElementById('district')?.value;
     const state = document.getElementById('state')?.value;
-    const specialization = document.getElementById('specialization')?.value;
-    const experience = document.getElementById('experience')?.value;
+    const specialization = role === 'coach' ? document.getElementById('coach-specialization')?.value : (role === 'recruiter' ? document.getElementById('recruiter-org')?.value : undefined);
+    const experience = document.getElementById('coach-experience')?.value;
     
     const payload = {
         name, email, password, role,

@@ -3,6 +3,39 @@ const router = express.Router();
 const { query } = require('../config/db');
 const auth = require('../middleware/auth');
 
+const sports = [
+  "Cricket",
+  "Football",
+  "Tennis",
+  "Badminton",
+  "Athletics",
+  "Basketball",
+  "Volleyball",
+  "Hockey",
+  "Table Tennis",
+  "Kabaddi",
+  "Swimming",
+  "Boxing",
+  "Wrestling",
+  "Archery",
+  "Shooting",
+  "Chess",
+  "Rugby",
+  "Handball",
+  "Cycling",
+  "Gymnastics",
+  "Weightlifting",
+  "Taekwondo",
+  "Karate",
+  "Judo",
+  "Fencing",
+  "Skating",
+  "Surfing",
+  "Baseball",
+  "Softball",
+  "Golf"
+];
+
 // @route   GET api/athletes/profile
 // @desc    Get current athlete's profile exactly as specified
 // @access  Private (Athlete only)
@@ -23,6 +56,9 @@ router.get('/profile', auth, async (req, res) => {
 router.post('/profile', auth, async (req, res) => {
   if (req.user.role !== 'athlete') return res.status(403).json({ message: 'Access denied' });
   const { sport, age, gender, district, state, achievements } = req.body;
+  if (sport && !sports.includes(sport)) {
+    return res.status(400).json({ message: 'Invalid sport selected' });
+  }
   try {
     const existing = await query.get('SELECT id FROM athletes WHERE user_id = ?', [req.user.id]);
     if (existing) return res.status(400).json({ message: 'Profile already exists' });
@@ -43,6 +79,9 @@ router.post('/profile', auth, async (req, res) => {
 router.put('/profile', auth, async (req, res) => {
   if (req.user.role !== 'athlete') return res.status(403).json({ message: 'Access denied' });
   const { sport, age, gender, district, state, achievements } = req.body;
+  if (sport && !sports.includes(sport)) {
+    return res.status(400).json({ message: 'Invalid sport selected' });
+  }
   try {
     const existing = await query.get('SELECT id FROM athletes WHERE user_id = ?', [req.user.id]);
     if (!existing) {
@@ -102,6 +141,9 @@ router.put('/me', auth, async (req, res) => {
   }
 
   const { sport, age, gender, height, weight, achievements, district, state } = req.body;
+  if (sport && !sports.includes(sport)) {
+    return res.status(400).json({ message: 'Invalid sport selected' });
+  }
 
   try {
     const athlete = await query.get('SELECT id FROM athletes WHERE user_id = ?', [req.user.id]);

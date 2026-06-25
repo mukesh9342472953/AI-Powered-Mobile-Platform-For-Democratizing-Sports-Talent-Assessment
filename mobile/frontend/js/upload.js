@@ -234,20 +234,65 @@ async function deleteVideo(id) {
 
 async function assessVideo(id) {
     const list = document.getElementById('videos-list');
+    const originalHtml = list.innerHTML;
     list.innerHTML = '<div class="processing-ring-container"><div class="loader-ring"></div><div class="pulse-text">AI is analyzing mechanics...</div></div>';
     
     try {
         const res = await apiFetch(`/assessments/analyze/${id}`, { method: 'POST' });
         const data = await res.json();
         
-        if (!res.ok) throw new Error(data.message || 'Assessment failed');
+        if (!res.ok) {
+            if (data.status === 'Rejected') {
+                list.innerHTML = originalHtml;
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+                showValidationModal(data.selectedSport, data.detectedSport);
+                return;
+            }
+            throw new Error(data.message || 'Assessment failed');
+        }
         
-        alert(`Assessment complete! You scored ${data.assessment.score}%. Check your dashboard.`);
-        window.location.href = 'dashboard.html';
+        // Success verified display
+        list.innerHTML = `
+            <div class="processing-ring-container" style="text-align: center; padding: 20px;">
+                <div style="color: #34d399; font-size: 48px; margin-bottom: 12px;"><i data-lucide="check-circle" style="width: 48px; height: 48px; stroke: #34d399;"></i></div>
+                <h3 style="color: white; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px;">✓ Sport Verified</h3>
+                <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 12px;">${data.assessment.sport} video detected successfully.</p>
+                <p style="color: var(--text-secondary); font-size: 13.5px; margin-bottom: 16px; font-weight: 500;">Starting AI Assessment...</p>
+                <div class="loader-ring" style="width: 24px; height: 24px; border-width: 2px; margin: 0 auto;"></div>
+            </div>
+        `;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        
+        setTimeout(() => {
+            alert(`Assessment complete! You scored ${data.assessment.score}%. Check your dashboard.`);
+            window.location.href = 'dashboard.html';
+        }, 2000);
         
     } catch (e) {
         alert(e.message);
         loadVideos(); // revert UI on failure
+    }
+}
+
+function showValidationModal(selected, detected) {
+    document.getElementById('val-selected-sport').textContent = selected;
+    document.getElementById('val-detected-sport').textContent = detected;
+    document.getElementById('val-expected-sport').textContent = selected;
+    document.getElementById('validation-modal').style.display = 'block';
+    document.getElementById('validation-overlay').style.display = 'block';
+}
+
+function closeValidationModal() {
+    document.getElementById('validation-modal').style.display = 'none';
+    document.getElementById('validation-overlay').style.display = 'none';
+}
+
+function triggerUploadInput() {
+    closeValidationModal();
+    const fileInput = document.getElementById('video-file');
+    if (fileInput) {
+        fileInput.scrollIntoView({ behavior: 'smooth' });
+        fileInput.click();
     }
 }
 

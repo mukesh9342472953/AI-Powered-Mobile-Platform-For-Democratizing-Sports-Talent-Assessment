@@ -5,6 +5,39 @@ const jwt = require('jsonwebtoken');
 const { query } = require('../config/db');
 const auth = require('../middleware/auth');
 
+const sports = [
+  "Cricket",
+  "Football",
+  "Tennis",
+  "Badminton",
+  "Athletics",
+  "Basketball",
+  "Volleyball",
+  "Hockey",
+  "Table Tennis",
+  "Kabaddi",
+  "Swimming",
+  "Boxing",
+  "Wrestling",
+  "Archery",
+  "Shooting",
+  "Chess",
+  "Rugby",
+  "Handball",
+  "Cycling",
+  "Gymnastics",
+  "Weightlifting",
+  "Taekwondo",
+  "Karate",
+  "Judo",
+  "Fencing",
+  "Skating",
+  "Surfing",
+  "Baseball",
+  "Softball",
+  "Golf"
+];
+
 // @route   POST api/auth/register
 // @desc    Register a user
 // @access  Public
@@ -13,6 +46,10 @@ router.post('/register', async (req, res) => {
 
   if (!password || password.length < 6) {
     return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+  }
+
+  if (role === 'athlete' && sport && !sports.includes(sport)) {
+    return res.status(400).json({ message: 'Invalid sport selected' });
   }
 
   try {

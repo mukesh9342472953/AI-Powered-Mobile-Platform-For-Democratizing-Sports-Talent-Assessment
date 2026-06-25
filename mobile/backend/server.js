@@ -39,6 +39,7 @@ const adminRoutes = require('./routes/admin');
 const leaderboardRoutes = require('./routes/leaderboard');
 const dashboardRoutes = require('./routes/dashboard');
 const profileRoutes = require('./routes/profile');
+const sportsRoutes = require('./routes/sports');
 
 // Mount API Routes
 app.use('/api/auth', authRoutes);
@@ -55,6 +56,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/sports', sportsRoutes);
 
 // Base Route to check status
 app.get('/api/health', (req, res) => {

@@ -104,6 +104,25 @@
                         </div>
                     </div>
 
+                    <!-- Invalid Video Modal Popup -->
+                    <div id="validation-modal" class="card" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; width: 85%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); background: #0f172a; border: 1px solid #ef4444; border-radius: var(--radius-lg); padding: 20px;">
+                        <div class="card-title" style="color: #ef4444; display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700;">
+                            <i data-lucide="alert-triangle"></i> Invalid Video Uploaded
+                        </div>
+                        <div class="card-body" style="margin-top: 12px; font-size: 14px; line-height: 1.5; color: var(--text-primary);">
+                            <p style="margin-bottom: 8px;">Selected Sport: <strong id="val-selected-sport" style="color: var(--primary);"></strong></p>
+                            <p style="margin-bottom: 12px;">Detected Sport: <strong id="val-detected-sport" style="color: #ef4444;"></strong></p>
+                            <p style="color: var(--text-secondary); margin-bottom: 16px;">Please upload a <span id="val-expected-sport" style="font-weight: 600; color: white;"></span> training or match video. Assessment cannot continue.</p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <button onclick="triggerUploadInput()" class="btn" style="background: linear-gradient(135deg, var(--primary), #059669); margin: 0;">Upload New Video</button>
+                            <button onclick="closeValidationModal()" class="btn btn-secondary" style="margin: 0;">Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- Background overlay for modal -->
+                    <div id="validation-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 999;" onclick="closeValidationModal()"></div>
+
                 </div>
             </div>
         </div>
